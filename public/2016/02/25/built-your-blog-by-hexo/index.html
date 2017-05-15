@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>利用 Hexo 搭建个人博客 | Zhiw</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Hexo," />
+  
+
+  <meta name="description" content="前言本文主要介绍利用 Hexo 和 GitHub Pages 搭建个人博客，在此之前，默认您已经拥有 GitHub 账号以及了解 Hexo 和 GitHub Pages 的相关知识，若有疑问，可前往 Hexo 和 GitHub Pages 进行了解。
+安装 Node.js安装 NVM(Node Version Manager) 使用 brew 安装 NVMbrew install nvm
+將下列指">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用 Hexo 搭建个人博客">
+<meta property="og:url" content="http://yuzhiw.com/2016/02/25/built-your-blog-by-hexo/index.html">
+<meta property="og:site_name" content="Zhiw">
+<meta property="og:description" content="前言本文主要介绍利用 Hexo 和 GitHub Pages 搭建个人博客，在此之前，默认您已经拥有 GitHub 账号以及了解 Hexo 和 GitHub Pages 的相关知识，若有疑问，可前往 Hexo 和 GitHub Pages 进行了解。
+安装 Node.js安装 NVM(Node Version Manager) 使用 brew 安装 NVMbrew install nvm
+將下列指">
+<meta property="og:updated_time" content="2016-11-23T01:48:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="利用 Hexo 搭建个人博客">
+<meta name="twitter:description" content="前言本文主要介绍利用 Hexo 和 GitHub Pages 搭建个人博客，在此之前，默认您已经拥有 GitHub 账号以及了解 Hexo 和 GitHub Pages 的相关知识，若有疑问，可前往 Hexo 和 GitHub Pages 进行了解。
+安装 Node.js安装 NVM(Node Version Manager) 使用 brew 安装 NVMbrew install nvm
+將下列指">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=d671a41f" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css" type="text/css">
+  
+
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-77757943-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?288b0ec4a4935e5a70a2a1e7475509e9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">Zhiw</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">Zhiw</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">Posts List</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装-Node-js"><span class="toc-text">安装 Node.js</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装-NVM-Node-Version-Manager"><span class="toc-text">安装 NVM(Node Version Manager)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用-NVM-安装-Node-js"><span class="toc-text">使用 NVM 安装 Node.js</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装-Hexo"><span class="toc-text">安装 Hexo</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Hexo-的使用"><span class="toc-text">Hexo 的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#文件结构"><span class="toc-text">文件结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hexo-命令介绍"><span class="toc-text">Hexo 命令介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#新建博文"><span class="toc-text">新建博文</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#新建页面"><span class="toc-text">新建页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hexo-部署"><span class="toc-text">Hexo 部署</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装-Nex-T-主题"><span class="toc-text">安装 Nex.T 主题</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考链接"><span class="toc-text">参考链接</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-built-your-blog-by-hexo" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">利用 Hexo 搭建个人博客</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.02.25</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Yu Zhiwei</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Hexo/">Hexo</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+        <i class="icon-comment"></i> 
+        <span class="ds-thread-count" data-thread-key="post-built-your-blog-by-hexo"><i class="fa fa-spinner fa-spin"></i></span> 条评论
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本文主要介绍利用 Hexo 和 GitHub Pages 搭建个人博客，在此之前，默认您已经拥有 GitHub 账号以及了解 Hexo 和 GitHub Pages 的相关知识，若有疑问，可前往 <a href="https://hexo.io/zh-cn/" target="_blank" rel="external">Hexo</a> 和 <a href="https://pages.github.com/" target="_blank" rel="external">GitHub Pages</a> 进行了解。</p>
+<h1 id="安装-Node-js"><a href="#安装-Node-js" class="headerlink" title="安装 Node.js"></a>安装 Node.js</h1><h2 id="安装-NVM-Node-Version-Manager"><a href="#安装-NVM-Node-Version-Manager" class="headerlink" title="安装 NVM(Node Version Manager)"></a>安装 NVM(Node Version Manager)</h2><p> 使用 <a href="http://brew.sh" target="_blank" rel="external">brew</a> 安装 NVM<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">brew install nvm</span><br></pre></td></tr></table></figure></p>
+<p>將下列指令加入 <code>.bash_profile</code><br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> NVM_DIR=~/.nvm</span><br><span class="line"><span class="built_in">source</span> $(brew --prefix nvm)/nvm.sh</span><br></pre></td></tr></table></figure></p>
+<p>重新载入 <code>.bash_profile</code> 设定<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">source</span> .bash_profile</span><br></pre></td></tr></table></figure></p>
+<h2 id="使用-NVM-安装-Node-js"><a href="#使用-NVM-安装-Node-js" class="headerlink" title="使用 NVM 安装 Node.js"></a>使用 NVM 安装 Node.js</h2><p>列出所有可安装的版本<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nvm ls -remote</span><br></pre></td></tr></table></figure></p>
+<p>安装对应版本的 Node<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nvm install <span class="string">"your version"</span></span><br></pre></td></tr></table></figure></p>
+<p>使用对应版本的 Node.js<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nvm use <span class="string">"your version"</span></span><br></pre></td></tr></table></figure></p>
+<p>预设使用你下载的版本<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nvm <span class="built_in">alias</span> default <span class="string">"your version"</span></span><br></pre></td></tr></table></figure></p>
+<p>测试 Node.js和 npm<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">node -v</span><br><span class="line">npm -v</span><br></pre></td></tr></table></figure></p>
+<h1 id="安装-Hexo"><a href="#安装-Hexo" class="headerlink" title="安装 Hexo"></a>安装 Hexo</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+<p>部署 Hexo<br>hexo init [文件名]<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo init hexo</span><br><span class="line"><span class="built_in">cd</span> hexo</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure></p>
+<p>部署成功之后，Hexo 会自动在目标文件夹建立博客网站所需要的所有文件。此时可以通过输入以下命令在本地进行预览<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo generate</span><br><span class="line">hexo server</span><br></pre></td></tr></table></figure></p>
+<p>此时，打开浏览器输入 <a href="http://localhost:4000" target="_blank" rel="external">http://localhost:4000</a>，就可以看到博客的效果，按<code>Ctrl+C</code>可停止服务</p>
+<h2 id="Hexo-的使用"><a href="#Hexo-的使用" class="headerlink" title="Hexo 的使用"></a>Hexo 的使用</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#10;&#9500;&#9472;&#9472; _config.yml    &#10;&#9500;&#9472;&#9472; package.json&#10;&#9500;&#9472;&#9472; scaffolds&#10;&#9500;&#9472;&#9472; public&#10;&#9500;&#9472;&#9472; source&#10;&#9500;   &#9500;&#9472;&#9472; _drafts&#10;&#9500;   &#9492;&#9472;&#9472; _posts&#10;&#9492;&#9472;&#9472; themes</span><br></pre></td></tr></table></figure>
+<h3 id="文件结构"><a href="#文件结构" class="headerlink" title="文件结构"></a>文件结构</h3><p><strong> _config.yml </strong><br>网站的配置信息，您可以在此配置大部分的参数。</p>
+<p><strong> package.json </strong><br>应用程序的信息。EJS, Stylus 和 Markdown renderer 已默认安装，您可以自由移除。</p>
+<p><strong> scaffolds </strong><br>模版文件夹。当您新建文章时，Hexo 会根据 scaffold 来建立文件。</p>
+<p><strong> public </strong><br>利用<code>hexo g</code>命令生成的静态文件，也就是最终部署到网站上的文件夹，可以根据需要进行修改，<strong> 比如在 GitHub 上生成 README 文件，可以将文件命名为 <code>README.mdown</code> ，然后将文件移动到该文件夹下面，再进行部署。 </strong></p>
+<p><strong> source </strong><br>资源文件夹是存放用户资源的地方。除 <code>_posts</code> 文件夹之外，开头命名为 <code>_</code> (下划线)的文件 / 文件夹和隐藏的文件将会被忽略。Markdown 和 HTML 文件会被解析并放到 <code>public</code> 文件夹，而其他文件会被拷贝过去。</p>
+<p><strong> themes </strong><br>主题文件夹。Hexo 会根据主题来生成静态页面。</p>
+<h3 id="Hexo-命令介绍"><a href="#Hexo-命令介绍" class="headerlink" title="Hexo 命令介绍"></a>Hexo 命令介绍</h3><p>常用命令(括号内为简写)：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean        清除文件缓存</span><br><span class="line">hexo deploy(d)    部署你的网站</span><br><span class="line">hexo generate(g)  生成静态文件</span><br><span class="line">hexo init         新建一个hexo目录文件夹</span><br><span class="line">new(n) <span class="string">"post name"</span>      新建文章</span><br><span class="line">new page <span class="string">"page name"</span>    新建页面</span><br><span class="line">server(s)        启动服务器</span><br></pre></td></tr></table></figure></p>
+<p>更多命令请输入<code>hexo help</code>查看</p>
+<h3 id="新建博文"><a href="#新建博文" class="headerlink" title="新建博文"></a>新建博文</h3><p>我们可以使用命令新建博文，输入以下命令：<br><code>hexo new &quot;题目&quot;</code><br>这样在我们工程的<code>/source/_posts/</code>下面会新建一个“题目.md”的文件，这就是我们新建的博文<br>或者也可以手动在<code>/source/_posts/</code>下新建一个“题目.md”的文件。<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">title: Hello World</span><br><span class="line">date: <span class="number">2016</span>-<span class="number">02</span>-<span class="number">25</span> <span class="number">19</span>:<span class="number">56</span>:<span class="number">29</span> </span><br><span class="line">categories: hexo </span><br><span class="line">tags: [hexo,github] <span class="comment">#多于一项时用这种格式</span></span><br><span class="line">---</span><br><span class="line">正文</span><br></pre></td></tr></table></figure></p>
+<h3 id="新建页面"><a href="#新建页面" class="headerlink" title="新建页面"></a>新建页面</h3><p>新建的博文默认是在文章页面，如果我们需要新建如分类，标签和关于这样的页面，需要执行以下命令：<br><code>hexo new page &quot;页面名称&quot;</code><br>执行后<code>source/</code>新建了一个以刚才页面名称命名文件夹，并多了一个”index.md“的文件，这便是我们新建的页面</p>
+<h3 id="Hexo-部署"><a href="#Hexo-部署" class="headerlink" title="Hexo 部署"></a>Hexo 部署</h3><p>部署前要在网站配置文件下设置：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">deploy:&#10;  type: git&#10;  repo: &#20320;&#30340;github pages&#30340;&#22320;&#22336;.git&#10;  branch: master</span><br></pre></td></tr></table></figure></p>
+<p>然后执行以下命令：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo generate</span><br><span class="line">hexo deploy</span><br></pre></td></tr></table></figure></p>
+<h3 id="安装-Nex-T-主题"><a href="#安装-Nex-T-主题" class="headerlink" title="安装 Nex.T 主题"></a>安装 Nex.T 主题</h3><p>我的博客使用了Nex.T的主题，详情可到 <a href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="external">Nex.T</a> 进行查看，有详细的使用说明，你也可以使用其他你喜欢的主题。</p>
+<p>折腾了好长时间终于把文章写完，也成功部署上去了，很久时间不写文章，有点生疏，在此记录下这个过程来也算是给博客开了一个头，同时也给后面有需要的一个参考，少走弯路，相互学习。</p>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><p><a href="https://hexo.io/zh-cn/" target="_blank" rel="external">Hexo</a><br><a href="https://pages.github.com/" target="_blank" rel="external">GitHub Pages</a><br><a href="http://mac-osx-for-newbie-book.kejyun.com/software/softwareWebDeveloperNodeJS.html" target="_blank" rel="external">Node.js | Mac OSX 新手入门</a><br><a href="http://wuxiaolong.me/2015/07/31/build-blog-by-hexo/" target="_blank" rel="external">手把手教你建 github 技术博客</a></p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">Close</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+  <section class="duoshuo-comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="post-built-your-blog-by-hexo" 
+      data-title="利用 Hexo 搭建个人博客" data-url="http://yuzhiw.com/2016/02/25/built-your-blog-by-hexo/index.html"></div>
+    <!-- 多说评论框 end -->
+  </section>
+
+
+
+
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"yuzhiw"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

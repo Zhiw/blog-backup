@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>OkHttp 更新 Token 的解决方案 | Zhiw</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Zhiw , Android , Hexo, 安卓开发 , Java , Android Studio" />
+  
+
+  <meta name="description" content="前言一般应用在用户登录以后，会保存 token 的相关信息，以便进行接下来的相关请求，这里就涉及到一个 token 有效期的问题。每次打开应用的时候，本地判断 token 是否有效，无效则需要重新获取新的 token。但是本地验证也会存在一些问题：
+
+用户手机时间被调整
+进入应用一段时间以后，token 失效
+
+因此需要根据请求返回进行 token 的有效期判断，下面提供两种解决方案。
+Authe">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OkHttp 更新 Token 的解决方案">
+<meta property="og:url" content="http://yuzhiw.com/2016/12/01/okhttp-refresh-token/index.html">
+<meta property="og:site_name" content="Zhiw">
+<meta property="og:description" content="前言一般应用在用户登录以后，会保存 token 的相关信息，以便进行接下来的相关请求，这里就涉及到一个 token 有效期的问题。每次打开应用的时候，本地判断 token 是否有效，无效则需要重新获取新的 token。但是本地验证也会存在一些问题：
+
+用户手机时间被调整
+进入应用一段时间以后，token 失效
+
+因此需要根据请求返回进行 token 的有效期判断，下面提供两种解决方案。
+Authe">
+<meta property="og:updated_time" content="2016-12-01T14:28:33.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OkHttp 更新 Token 的解决方案">
+<meta name="twitter:description" content="前言一般应用在用户登录以后，会保存 token 的相关信息，以便进行接下来的相关请求，这里就涉及到一个 token 有效期的问题。每次打开应用的时候，本地判断 token 是否有效，无效则需要重新获取新的 token。但是本地验证也会存在一些问题：
+
+用户手机时间被调整
+进入应用一段时间以后，token 失效
+
+因此需要根据请求返回进行 token 的有效期判断，下面提供两种解决方案。
+Authe">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=d671a41f" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css" type="text/css">
+  
+
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-77757943-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?288b0ec4a4935e5a70a2a1e7475509e9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">Zhiw</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">Zhiw</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">Posts List</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Authenticator"><span class="toc-text">Authenticator</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Interceptor"><span class="toc-text">Interceptor</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考链接"><span class="toc-text">参考链接</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-okhttp-refresh-token" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">OkHttp 更新 Token 的解决方案</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.12.01</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Yu Zhiwei</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Android/">Android</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+        <i class="icon-comment"></i> 
+        <span class="ds-thread-count" data-thread-key="post-okhttp-refresh-token"><i class="fa fa-spinner fa-spin"></i></span> 条评论
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>一般应用在用户登录以后，会保存 token 的相关信息，以便进行接下来的相关请求，这里就涉及到一个 token 有效期的问题。每次打开应用的时候，本地判断 token 是否有效，无效则需要重新获取新的 token。但是本地验证也会存在一些问题：</p>
+<ol>
+<li>用户手机时间被调整</li>
+<li>进入应用一段时间以后，token 失效</li>
+</ol>
+<p>因此需要根据请求返回进行 token 的有效期判断，下面提供两种解决方案。</p>
+<h1 id="Authenticator"><a href="#Authenticator" class="headerlink" title="Authenticator"></a>Authenticator</h1><p>利用 OkHttp 提供的 <a href="https://github.com/square/okhttp/wiki/Recipes#handling-authentication" target="_blank" rel="external">Authnenticator</a> 接口，OkHttp 会在返回为 <code>401</code> 的情况下重新进行请求，但是请注意，只有 HTTP 返回的状态码为 <code>401</code> 的时候，才会调用该接口。如果后台接口设计合乎规范，可以使用该方法。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TokenAuthenticator</span> <span class="keyword">implements</span> <span class="title">Authenticator</span> </span>&#123;</span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Request <span class="title">authenticate</span><span class="params">(Route route, Response response)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">      </span><br><span class="line">       	<span class="comment">// 去获取新的 token，采用同步请求方式</span></span><br><span class="line">        String newToken = service.refreshToken.execute().body();</span><br><span class="line"></span><br><span class="line">       <span class="comment">// 保存新的 token</span></span><br><span class="line">	 Config.saveToken(newToken);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> response.request().newBuilder()</span><br><span class="line">                .addHeader(<span class="string">"Authorization"</span>,newToken)</span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当然，不是所有请求都把 token 放在 <code>Header</code> 里面，比如放在 <code>Query</code> 参数里面，那么我们可以这样做：<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TokenAuthenticator</span> <span class="keyword">implements</span> <span class="title">Authenticator</span> </span>&#123;</span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Request <span class="title">authenticate</span><span class="params">(Route route, Response response)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">      </span><br><span class="line">        <span class="comment">// 去获取新的 token，采用同步请求方式</span></span><br><span class="line">        String newToken = call.execute().body();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 保存新的 token</span></span><br><span class="line">	Config.saveToken(newToken);</span><br><span class="line"></span><br><span class="line">        Request originalRequest = response.request();</span><br><span class="line">       </span><br><span class="line">        HttpUrl url = originalRequest.url()</span><br><span class="line">                .newBuilder()</span><br><span class="line">                .setQueryParameter(<span class="string">"Token"</span>, newToken)</span><br><span class="line">                .build();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> response.request().newBuilder()</span><br><span class="line">                .url(url)</span><br><span class="line">                .build();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>关键点<br>    <code>Request originalRequest = response.request();</code><br>    <code>HttpUrl url = originalRequest.url();</code></p>
+<p>如果 token 放在 <code>FormBody</code> 里面，可以通过 <code>originalRequest.body()</code> 进行操作<br>如果通过 <code>JSON</code> 的方式，暂时没有找到解决的方法。<br>最后我们给 OkHttp 设置 <code>Authenticator</code></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">OkHttpClient.Builder builder = <span class="keyword">new</span> OkHttpClient.Builder();</span><br><span class="line">builder.authenticator(<span class="keyword">new</span> TokenAuthenticator());</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>但是，并不是所有接口都这样设计，如果没有返回 <code>401</code> 的状态码，而是返回诸如以下这种类型数据：<br><figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	"<span class="attribute">message</span>":<span class="value"><span class="string">"UNAUTHORIZED"</span></span>,</span><br><span class="line">	"<span class="attribute">code</span>":<span class="value"><span class="number">401</span></span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果是这样的自定义数据格式的，那么使用 Authenticator 这样的方式便不行。</p>
+<h1 id="Interceptor"><a href="#Interceptor" class="headerlink" title="Interceptor"></a>Interceptor</h1><p>使用 OkHttp 的拦截器 <a href="https://github.com/square/okhttp/wiki/Interceptors" target="_blank" rel="external">Intercaptor</a></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TokenInterceptor</span> <span class="keyword">implements</span> <span class="title">Interceptor</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Charset UTF_8 = Charset.forName(<span class="string">"UTF-8"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Response <span class="title">intercept</span><span class="params">(Chain chain)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">        Request originalRequest = chain.request();</span><br><span class="line">        Response originalResponse = chain.proceed(originalRequest);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 获取返回的数据字符串</span></span><br><span class="line">        ResponseBody responseBody = originalResponse.body();</span><br><span class="line">        BufferedSource source = originalResponse.body().source();</span><br><span class="line">        source.request(Integer.MAX_VALUE);</span><br><span class="line">        Buffer buffer = source.buffer();</span><br><span class="line">        Charset charset = UTF_8;</span><br><span class="line">        MediaType contentType = responseBody.contentType();</span><br><span class="line">        <span class="keyword">if</span> (contentType != <span class="keyword">null</span>) &#123;</span><br><span class="line">            charset = contentType.charset();</span><br><span class="line">        &#125;</span><br><span class="line">        String bodyString = buffer.clone().readString(charset);</span><br><span class="line">		</span><br><span class="line">	<span class="comment">// 如果 token 已经过期</span></span><br><span class="line">        <span class="keyword">if</span> (token is expired) &#123;</span><br><span class="line">            String newToken = service.refreshToken.execute().body();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 保存新的 token</span></span><br><span class="line">	    Config.saveToken(newToken);</span><br><span class="line"></span><br><span class="line">	   <span class="comment">// 添加到 Query 参数</span></span><br><span class="line">            HttpUrl url = chain.request().url()</span><br><span class="line">                    .newBuilder()</span><br><span class="line">                    .setQueryParameter(<span class="string">"Token"</span>, newToken)</span><br><span class="line">                    .build();</span><br><span class="line"></span><br><span class="line">            Request newRequest = chain.request().newBuilder()</span><br><span class="line">                    .url(url)</span><br><span class="line">                    .build();</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 添加到 Header</span></span><br><span class="line">             Request newRequest = originalRequest.newBuilder()</span><br><span class="line">             		.header(<span class="string">"Authorization"</span>,newToken)</span><br><span class="line">             		.build();</span><br><span class="line"></span><br><span class="line">            originalResponse.body().close();</span><br><span class="line">            <span class="keyword">return</span> chain.proceed(newRequest);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> originalResponse;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>关键点<br>     <code>Request originalRequest = chain.request();</code><br>    <code>Response originalResponse = chain.proceed(originalRequest);</code></p>
+<p>注意，按照文档关于 <a href="https://square.github.io/okhttp/3.x/okhttp/okhttp3/ResponseBody.html" target="_blank" rel="external">ResponseBody</a> 的说明</p>
+<blockquote>
+<p><strong> The response body can be consumed only once. </strong></p>
+<p>This class may be used to stream very large responses. For example, it is possible to use this class to read a response that is larger than the entire memory allocated to the current process. It can even stream a response larger than the total storage on the current device, which is a common requirement for video streaming applications.</p>
+<p>Because this class does not buffer the full response in memory, the application may not re-read the bytes of the response. Use this one shot to read the entire response into memory with bytes() or string(). Or stream the response with either source(), byteStream(), or charStream().</p>
+</blockquote>
+<p>请求返回的数据有可能过大，所以没有将所有数据缓存在内存里面，应用不能再去读取这些数据  </p>
+<p>所以在处理返回的数据的时候，可以使用上面代码里面的方法处理返回的数据（也有其他的方法），也可以为了省事，使用 <code>response.Body().string()</code> ,但是切记最后返回要重新请求<br><code>return chain.procees(resquest)</code></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Request originalRequest = chain.request();</span><br><span class="line">      Response originalResponse = chain.proceed(originalRequest);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 获取返回的数据字符串</span></span><br><span class="line">      ResponseBody responseBody = originalResponse.body();</span><br><span class="line"></span><br><span class="line">      <span class="comment">// do something</span></span><br><span class="line"></span><br><span class="line">      <span class="keyword">return</span> chain.proceed(request);</span><br></pre></td></tr></table></figure>
+<p>同样的，为 OkHttp 设置 <code>Interceptor</code><br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">OkHttpClient.Builder builder = <span class="keyword">new</span> OkHttpClient.Builder();</span><br><span class="line">builder.addInterceptor(<span class="keyword">new</span> TokenInterceptor());</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ul>
+<li><code>Authenticator</code> 适用于状态码返回 <code>401</code> 的情况</li>
+<li><code>Interceptor</code> 使用范围更广，不仅可以处理 token 失效的多种情况，同时可以为网络请求设置拦截器，实现自己想要的功能<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1></li>
+<li><a href="https://github.com/square/okhttp/wiki/Recipes#handling-authentication" target="_blank" rel="external">OkHttp Authnenticator</a></li>
+<li><a href="https://github.com/square/okhttp/wiki/Interceptors" target="_blank" rel="external">Okhttp Intercaptor</a></li>
+<li><a href="https://square.github.io/okhttp/3.x/okhttp/okhttp3/ResponseBody.html" target="_blank" rel="external">OkHttp ResponseBody</a></li>
+</ul>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">Close</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+  <section class="duoshuo-comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="post-okhttp-refresh-token" 
+      data-title="OkHttp 更新 Token 的解决方案" data-url="http://yuzhiw.com/2016/12/01/okhttp-refresh-token/index.html"></div>
+    <!-- 多说评论框 end -->
+  </section>
+
+
+
+
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"yuzhiw"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
