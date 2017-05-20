@@ -12,7 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="Zhiw , Android , Hexo, 安卓开发 , Java , Android Studio" />
+    <meta name="keywords" content="Zhiw,Android,Hexo,安卓开发,Java,Android Studio" />
   
 
   <meta name="description" content="原文地址：Get Started With Retrofit 2 HTTP Client
@@ -65,11 +65,9 @@ Retrofit 是什么？Retrofit 是一个用于 Android 和 Java 平台的类型�
     <link rel="icon" href="/images/favicon.ico">
   
 
-  <link href="/css/styles.css?v=d671a41f" rel="stylesheet">
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
 
 
-  
-    <link rel="stylesheet" href="/css/personal-style.css" type="text/css">
   
 
   
@@ -99,6 +97,23 @@ ga('send', 'pageview');
   </script>
 
 
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
 
   
     <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
@@ -113,14 +128,14 @@ ga('send', 'pageview');
 
 
   
-    <span id="toolbox-mobile" class="toolbox-mobile">Zhiw</span>
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
   
 
   <div class="post-header CENTER">
    
   <div class="toolbox">
     <a class="toolbox-entry" href="/">
-      <span class="toolbox-entry-text">Zhiw</span>
+      <span class="toolbox-entry-text">盒子</span>
       <i class="icon-angle-down"></i>
       <i class="icon-home"></i>
     </a>
@@ -178,7 +193,7 @@ ga('send', 'pageview');
 
 
   <div id="toc" class="toc-article">
-    <strong class="toc-title">Posts List</strong>
+    <strong class="toc-title">文章目录</strong>
     <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#网络请求框架-Retrofit-2-使用入门"><span class="toc-text">网络请求框架 Retrofit 2 使用入门</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Retrofit-是什么？"><span class="toc-text">Retrofit 是什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#那么我们为什么要用-Retrofit-呢？"><span class="toc-text">那么我们为什么要用 Retrofit 呢？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-创建一个-Android-Studio-工程"><span class="toc-text">1.创建一个 Android Studio 工程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-添加依赖"><span class="toc-text">2. 添加依赖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-添加网络权限"><span class="toc-text">3. 添加网络权限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-自动生成-Java-对象"><span class="toc-text">4.自动生成 Java 对象</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#取得示例的-JSON-数据"><span class="toc-text">取得示例的 JSON 数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#将-JSON-数据映射到-Java-对象"><span class="toc-text">将 JSON 数据映射到 Java 对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#将数据模型导入-Android-Studio"><span class="toc-text">将数据模型导入 Android Studio</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-创建-Retrofit-实例"><span class="toc-text">5. 创建 Retrofit 实例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-创建-API-接口"><span class="toc-text">6.创建 API 接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-创建-API-工具类"><span class="toc-text">7.创建 API 工具类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-显示到-RecyclerView"><span class="toc-text">8.显示到 RecyclerView</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-执行请求"><span class="toc-text">9.执行请求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-理解-enqueue"><span class="toc-text">10. 理解 enqueue()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-测试应用"><span class="toc-text">11.测试应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-结合-RxJava"><span class="toc-text">12. 结合 RxJava</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#第一步"><span class="toc-text">第一步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第二步"><span class="toc-text">第二步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第三步"><span class="toc-text">第三步</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol></li></ol>
   </div>
 
@@ -220,9 +235,6 @@ ga('send', 'pageview');
         </span>
       
 
-      
-        <i class="icon-comment"></i> 
-        <span class="ds-thread-count" data-thread-key="post-get-started-with-retrofit"><i class="fa fa-spinner fa-spin"></i></span> 条评论
       
       
     </div>
@@ -368,10 +380,23 @@ compile &apos;com.squareup.retrofit2:adapter-rxjava:2.1.0&apos;
   </div>
 </article>
 
+
+   
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2016/12/01/okhttp-refresh-token/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2017/01/18/writing-test-cases-in-android/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
 </div>
-
-
-
 
 
   <a id="backTop" class="back-top">
@@ -385,7 +410,7 @@ compile &apos;com.squareup.retrofit2:adapter-rxjava:2.1.0&apos;
   <span id="cover" class="cover hide"></span>
   <div id="modal-dialog" class="modal-dialog hide-dialog">
     <div class="modal-header">
-      <span id="close" class="btn-close">Close</span>
+      <span id="close" class="btn-close">关闭</span>
     </div>
     <hr>
     <div class="modal-body">
@@ -448,29 +473,14 @@ compile &apos;com.squareup.retrofit2:adapter-rxjava:2.1.0&apos;
     
 
     
-  <section class="duoshuo-comments">
-    <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="post-get-started-with-retrofit" 
-      data-title="【译】网络请求框架 Retrofit 2 使用入门" data-url="http://yuzhiw.com/2016/12/27/get-started-with-retrofit/index.html"></div>
-    <!-- 多说评论框 end -->
-  </section>
 
 
 
 
-  <script type="text/javascript">
-  var duoshuoQuery = {short_name:"yuzhiw"};
-  (function() {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';ds.async = true;
-    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0]
-     || document.getElementsByTagName('body')[0]).appendChild(ds);
-  })();
-  </script>
+    
 
-
+    
+	
   </div>
 
   

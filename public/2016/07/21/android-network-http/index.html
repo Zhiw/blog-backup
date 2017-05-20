@@ -35,11 +35,9 @@ HTTP协议HTTP简介hypertext transfer protocol（超文本传输协议），TCP
     <link rel="icon" href="/images/favicon.ico">
   
 
-  <link href="/css/styles.css?v=d671a41f" rel="stylesheet">
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
 
 
-  
-    <link rel="stylesheet" href="/css/personal-style.css" type="text/css">
   
 
   
@@ -69,6 +67,23 @@ ga('send', 'pageview');
   </script>
 
 
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
 
   
     <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
@@ -83,14 +98,14 @@ ga('send', 'pageview');
 
 
   
-    <span id="toolbox-mobile" class="toolbox-mobile">Zhiw</span>
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
   
 
   <div class="post-header CENTER">
    
   <div class="toolbox">
     <a class="toolbox-entry" href="/">
-      <span class="toolbox-entry-text">Zhiw</span>
+      <span class="toolbox-entry-text">盒子</span>
       <i class="icon-angle-down"></i>
       <i class="icon-home"></i>
     </a>
@@ -148,7 +163,7 @@ ga('send', 'pageview');
 
 
   <div id="toc" class="toc-article">
-    <strong class="toc-title">Posts List</strong>
+    <strong class="toc-title">文章目录</strong>
     <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HTTP协议"><span class="toc-text">HTTP协议</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP简介"><span class="toc-text">HTTP简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#主要特点"><span class="toc-text">主要特点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-URL"><span class="toc-text">HTTP URL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-和-Socket-的对比"><span class="toc-text">HTTP 和 Socket 的对比</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#请求和响应"><span class="toc-text">请求和响应</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#请求（Request）"><span class="toc-text">请求（Request）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#请求信息"><span class="toc-text">请求信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#请求方法"><span class="toc-text">请求方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#响应（Response）"><span class="toc-text">响应（Response）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#状态码"><span class="toc-text">状态码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#响应头"><span class="toc-text">响应头</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考资料"><span class="toc-text">参考资料</span></a></li></ol>
   </div>
 
@@ -190,9 +205,6 @@ ga('send', 'pageview');
         </span>
       
 
-      
-        <i class="icon-comment"></i> 
-        <span class="ds-thread-count" data-thread-key="post-android-network-http"><i class="fa fa-spinner fa-spin"></i></span> 条评论
       
       
     </div>
@@ -419,10 +431,23 @@ ga('send', 'pageview');
   </div>
 </article>
 
+
+   
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2016/04/24/douban-moviesTop250-spider/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2016/08/26/sources-not-found/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
 </div>
-
-
-
 
 
   <a id="backTop" class="back-top">
@@ -436,7 +461,7 @@ ga('send', 'pageview');
   <span id="cover" class="cover hide"></span>
   <div id="modal-dialog" class="modal-dialog hide-dialog">
     <div class="modal-header">
-      <span id="close" class="btn-close">Close</span>
+      <span id="close" class="btn-close">关闭</span>
     </div>
     <hr>
     <div class="modal-body">
@@ -499,29 +524,14 @@ ga('send', 'pageview');
     
 
     
-  <section class="duoshuo-comments">
-    <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="post-android-network-http" 
-      data-title="Android 网络编程之 HTTP 协议" data-url="http://yuzhiw.com/2016/07/21/android-network-http/index.html"></div>
-    <!-- 多说评论框 end -->
-  </section>
 
 
 
 
-  <script type="text/javascript">
-  var duoshuoQuery = {short_name:"yuzhiw"};
-  (function() {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';ds.async = true;
-    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0]
-     || document.getElementsByTagName('body')[0]).appendChild(ds);
-  })();
-  </script>
+    
 
-
+    
+	
   </div>
 
   
