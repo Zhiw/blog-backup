@@ -19,7 +19,7 @@ home_nav:
   # - name: Project
     # url: /project/
     # target_blank: true #在新页面打开
-  - name: Github
+  - name: GitHub
     url: https://github.com/forsigner
     target_blank: true
   - name: Twitter
@@ -145,9 +145,9 @@ about:
   - type: me
     icon: icon-user
     text_value:
-    - "爱技术，爱电影，爱生活."
+    - "爱技术，爱电影，爱生活"
     - "Android 开发工程师，Google 粉丝"
-    - "兴趣驱动学习，还在不断努力中"
+    - "菜鸟一个，还在不断努力中"
   - type: Github
     icon: icon-github
     text_key: Github
@@ -164,7 +164,7 @@ about:
     text_value: "karlkb81@gmail.com"
   - type: location
     icon: icon-location
-    text_value: 成都
+    text_value: 昆明
 
 # link:
 #   - name: 织网
