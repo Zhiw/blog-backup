@@ -1,7 +1,3 @@
 # Zhiw 的个人博客
 利用 [Hexo](http://hexo.io) 基于 [fexo](https://github.com/forsigner/fexo) 主题搭建的个人博客 <http://yuzhiw.com>
-# 联系我
-- Weibo: [@Zhiwthink](http://weibo.com/1638396777)
-
-- Twitter: [@ZhiwYu](https://twitter.com/ZhiwYu)
 
